@@ -7,10 +7,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Create from './components/create';
-import Read from './components/read';
-import Edit from './components/edit';
+import Create from './components/studentRegistrationForm';
+import Read from './components/displayStudents';
+import Edit from './components/modifyStudent';
 import { Create as CreateStudent, Read as ReadStudents, Edit as EditStudent } from './components/student'; // Import student components
+import DisplayStudents from './components/displayStudents';
 
 function App() {
   return (
@@ -28,9 +29,9 @@ function App() {
       </Navbar>
       <Routes>
         <Route path='/' element={<Content></Content>}></Route>
-        <Route path='/readstudents' element={<ReadStudents></ReadStudents>}></Route>
-        <Route path='/createstudent' element={<CreateStudent></CreateStudent>}></Route>
-        <Route path='/editstudent/:id' element={<EditStudent></EditStudent>}></Route>
+        <Route path='/displayStudents' element={<DisplayStudents></DisplayStudents>}></Route>
+        <Route path='/studentRegistrationForm' element={<StudentRegistrationForm></StudentRegistrationForm>}></Route>
+        <Route path='/modifyStudent/:id' element={<ModifyStudent></ModifyStudent>}></Route>
       </Routes>
       {/* <Header></Header>
       <Content></Content>
