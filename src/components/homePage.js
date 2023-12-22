@@ -2,6 +2,7 @@ function HomePage() {
 
     return (
 
+        // Home Page Text
         <div>
 
             <br />

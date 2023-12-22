@@ -3,6 +3,7 @@ import axios from "axios";
 
 function StudentRegistrationForm() {
 
+  // Variables for Student Registration Form
   const [name, setName] = useState('');
   const [course, setCourse] = useState('');
   const [picture, setPicture] = useState('');
@@ -12,10 +13,13 @@ function StudentRegistrationForm() {
 
   const handleSubmit = (e) => {
 
+    // Prevent the Default Browser Behavior of Forms
     e.preventDefault();
 
+    // Error Checking
     console.log("Name:", name, "Course:", course, "ID Number:", idNumber, "Picture:", picture, "Date of Birth:", dateOfBirth, "Expiry Date:", expiryDate);
 
+    // Create a Student Object
     const student = {
 
       name: name,
@@ -27,7 +31,10 @@ function StudentRegistrationForm() {
 
     };
 
+    // Send a POST Request to Server
     axios.post('http://localhost:4000/api/students', student)
+    
+      // Handle the Response from Server
       .then(response => {
 
         console.log(response.data);
@@ -47,6 +54,7 @@ function StudentRegistrationForm() {
 
       <h2>Registration Form</h2>
 
+      {/* Student Registration Form */}
       <form onSubmit={handleSubmit}>
 
         <div className="form-group">
@@ -112,6 +120,7 @@ function StudentRegistrationForm() {
 
         <div>
 
+          {/* Submit Button */}
           <input type="submit" value="Register Student" className="register-button"/>
 
         </div>
@@ -124,4 +133,5 @@ function StudentRegistrationForm() {
 
 }
 
+// Export Student Registration Form
 export default StudentRegistrationForm;

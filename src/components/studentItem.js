@@ -17,10 +17,9 @@ function StudentItem(props) {
 
     try {
 
-      console.log('Student ID:', props.myStudent.idNumber); // Add this console log statement
+      /// Error checking
+      console.log('Student ID:', props.myStudent.idNumber);
       await axios.delete(`http://localhost:4000/api/students/${props.myStudent.idNumber}`);
-      // Refresh the student list after deletion
-      // You can call a function to fetch the updated data or update the state accordingly
 
     } catch (error) {
 
@@ -33,6 +32,7 @@ function StudentItem(props) {
 
   return (
 
+    // Display Student Information in a Card, Three Students per Row
     <div className="student-container">
 
       <Card className="student-card">
@@ -43,6 +43,7 @@ function StudentItem(props) {
 
           <blockquote className="blockquote mb-0">
             <img src={props.myStudent.picture} alt="Image Not Found" style={{ width: '150px', height: '180px' }}/>
+
             <footer>
               <br />
 
@@ -52,8 +53,9 @@ function StudentItem(props) {
               <p>Date of Birth: {formatDate(props.myStudent.dateOfBirth)}</p>
               <p>Expiry Date: {formatDate(props.myStudent.expiryDate)}</p>
               <Button variant="danger" onClick={handleDelete}>Delete</Button>
-              
+
             </footer>
+
           </blockquote>
 
         </Card.Body>

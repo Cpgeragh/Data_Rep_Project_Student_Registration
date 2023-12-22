@@ -13,23 +13,30 @@ function LoginForm({ onLogin }) {
 
   return (
 
+    // Login Form Input
     <div className="login-form-container">
 
       <form onSubmit={handleSubmit}>
+
         <label className="login-form-input">
           Please Enter Administrator Password
           <br />
+
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="login-form-input"
           />
+
         </label>
         <br />
+
+        {/* Password Submit Button */}
         <button type="submit" className="login-form-button">Submit</button>
+
       </form>
-      
+
     </div>
 
   );
