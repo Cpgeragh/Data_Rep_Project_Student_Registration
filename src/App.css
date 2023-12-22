@@ -1,6 +1,15 @@
 .App {
   text-align: center;
+  background-size: 800px 600px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url(../public/backgroundImage.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -13,6 +22,15 @@
   }
 }
 
+.custom-navbar {
+  background-color: orangered;
+  color: white;
+}
+
+.custom-navbar .navbar-nav .nav-link {
+  color: white; /* Set the text color to white */
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -22,10 +40,48 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.student-container {
+  display: inline-block;
+  width: 33.33%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.student-card {
+  background-color: #1fa866 !important; /* Set the background color to bright yellow */
+  color: #f5f6f9 !important; /* Set the text color to black */
+}
+
+.form-group {
+
+  width: 33.33%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  color: white;
+
+}
+
+.form-control {
+  background-color: rgb(220, 212, 212) !important;
+}
+
+.register-button {
+
+  margin-top: 30px;
+  background-color: red;
+
+}
+
+.registration-label {
+  font-size: 23px;
 }
 
 @keyframes App-logo-spin {

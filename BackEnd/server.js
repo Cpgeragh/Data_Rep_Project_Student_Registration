@@ -36,7 +36,7 @@ const studentSchema = new mongoose.Schema({
 const studentModel = mongoose.model('students', studentSchema);
 
 // Express Put Route for Updating a Student by ID
-app.put('/api/student/:id', async (req, res) => {
+app.put('/api/students/:id', async (req, res) => {
   console.log("Update: " + req.params.id);
   try {
     let student = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -48,17 +48,23 @@ app.put('/api/student/:id', async (req, res) => {
 });
 
 // Express Post Route for Creating a Student
-app.post('/api/student', async (req, res) => {
+app.post('/api/students', async (req, res) => {
   console.log(req.body);
   try {
+    const { name, course, picture, idNumber, dateOfBirth, expiryDate } = req.body;
+
+    // Convert dateOfBirth string to a Date object
+    const formattedDateOfBirth = new Date(dateOfBirth);
+
     await studentModel.create({
-      name: req.body.name,
-      course: req.body.course,
-      picture: req.body.picture,
-      idNumber: req.body.idNumber,
-      dateOfBirth: req.body.dateOfBirth,
-      expiryDate: req.body.expiryDate,
+      name: name,
+      course: course,
+      picture: picture,
+      idNumber: idNumber,
+      dateOfBirth: formattedDateOfBirth,
+      expiryDate: expiryDate,
     });
+
     res.send('Student Created');
   } catch (error) {
     console.error(error);
@@ -67,11 +73,11 @@ app.post('/api/student', async (req, res) => {
 });
 
 // Express Get Route for Fetching a Specific Student by ID
-app.get('/api/student/:id', async (req, res) => {
-  console.log(req.params.id);
+app.get('/api/students', async (req, res) => {
   try {
-    let student = await studentModel.findById({ _id: req.params.id });
-    res.send(student);
+    // Fetch all students
+    let students = await studentModel.find({});
+    res.json(students);
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
@@ -80,7 +86,7 @@ app.get('/api/student/:id', async (req, res) => {
 
 // Default Route for HTTP GET Requests at Root Path ('/')
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Student Registration');
 });
 
 // Express Server Listening on a Port

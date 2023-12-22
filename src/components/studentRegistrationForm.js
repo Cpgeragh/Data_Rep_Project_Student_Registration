@@ -12,9 +12,7 @@ function StudentRegistrationForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Name: " + name +
-      " Course: " + course +
-      " ID Number: " + idNumber);
+    console.log("Name:", name, "Course:", course, "ID Number:", idNumber, "Picture:", picture, "Date of Birth:", dateOfBirth, "Expiry Date:", expiryDate);
 
     const student = {
       name: name,
@@ -25,7 +23,7 @@ function StudentRegistrationForm() {
       expiryDate: expiryDate,
     };
 
-    axios.post('http://localhost:4000/api/student', student)
+    axios.post('http://localhost:4000/api/students', student)
       .then(response => {
         console.log(response.data);
         // You may want to redirect the user or perform other actions upon successful submission
@@ -38,10 +36,10 @@ function StudentRegistrationForm() {
 
   return (
     <div>
-      <h2>Hello from Create Component!</h2>
+      <h2>Registration Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Name: </label>
+          <label className="registration-label">Name: </label>
           <input
             type="text"
             className="form-control"
@@ -50,7 +48,7 @@ function StudentRegistrationForm() {
           />
         </div>
         <div className="form-group">
-          <label>Course: </label>
+          <label className="registration-label">Course: </label>
           <input
             type="text"
             className="form-control"
@@ -59,7 +57,7 @@ function StudentRegistrationForm() {
           />
         </div>
         <div className="form-group">
-          <label>ID Number: </label>
+          <label className="registration-label">ID Number: </label>
           <input
             type="text"
             className="form-control"
@@ -68,7 +66,7 @@ function StudentRegistrationForm() {
           />
         </div>
         <div className="form-group">
-          <label>Picture URL: </label>
+          <label className="registration-label">Picture URL: </label>
           <input
             type="text"
             className="form-control"
@@ -77,7 +75,7 @@ function StudentRegistrationForm() {
           />
         </div>
         <div className="form-group">
-          <label>Date of Birth: </label>
+          <label className="registration-label">Date of Birth: </label>
           <input
             type="text"
             className="form-control"
@@ -86,7 +84,7 @@ function StudentRegistrationForm() {
           />
         </div>
         <div className="form-group">
-          <label>Expiry Date: </label>
+          <label className="registration-label">Expiry Date: </label>
           <input
             type="text"
             className="form-control"
@@ -95,7 +93,7 @@ function StudentRegistrationForm() {
           />
         </div>
         <div>
-          <input type="submit" value="Register Student" />
+          <input type="submit" value="Register Student" className="register-button"/>
         </div>
       </form>
     </div>

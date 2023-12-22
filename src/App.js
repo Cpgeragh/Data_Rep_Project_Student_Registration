@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Content from './components/content';
+import HomePage from './components/homePage';
 import Footer from './components/footer';
 import Header from './components/header';
 import Container from 'react-bootstrap/Container';
@@ -15,18 +15,18 @@ function App() {
   return (
     <BrowserRouter>
     <div className="App">
-       <Navbar bg="dark" data-bs-theme="dark">
+       <Navbar className="custom-navbar" >
         <Container>
-          <Navbar.Brand href="/">Navbar</Navbar.Brand>
-          <Nav className="me-auto">
+          <Nav className="mx-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/create">Create</Nav.Link>
-            <Nav.Link href="/read">Read</Nav.Link>
+            <Nav.Link href="/studentRegistrationForm">Register</Nav.Link>
+            <Nav.Link href="/displayStudents">Display</Nav.Link>
+            <Nav.Link href="/modifyStudent">Update</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
       <Routes>
-        <Route path='/' element={<Content></Content>}></Route>
+        <Route path='/' element={<HomePage></HomePage>}></Route>
         <Route path='/displayStudents' element={<DisplayStudents></DisplayStudents>}></Route>
         <Route path='/studentRegistrationForm' element={<StudentRegistrationForm></StudentRegistrationForm>}></Route>
         <Route path='/modifyStudent/:id' element={<ModifyStudent></ModifyStudent>}></Route>
