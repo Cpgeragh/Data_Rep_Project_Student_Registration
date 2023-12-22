@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 app.use(cors());
+
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -22,7 +23,7 @@ mongoose.connect('mongodb+srv://admin:admin@cluster0.gg1uhaj.mongodb.net/?retryW
   useUnifiedTopology: true,
 });
 
-// Define a Schema
+// Define Mongo Schema
 const studentSchema = new mongoose.Schema({
   name: String,
   course: String,
@@ -36,11 +37,22 @@ const studentSchema = new mongoose.Schema({
 const studentModel = mongoose.model('students', studentSchema);
 
 // Express Put Route for Updating a Student by ID
-app.put('/api/students/:id', async (req, res) => {
-  console.log("Update: " + req.params.id);
+app.put('/api/students/:idNumber', async (req, res) => {
+  console.log("Update: " + req.params.idNumber);
   try {
-    let student = await studentModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    let student = await studentModel.findByIdAndUpdate(req.params.idNumber, req.body, { new: true });
     res.send(student);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Express Get Route for Fetching a Student by ID
+app.get('/api/students/:idNumber', async (req, res) => {
+  try {
+    let student = await studentModel.findById(req.params.idNumber);
+    res.json(student);
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');
@@ -52,10 +64,8 @@ app.post('/api/students', async (req, res) => {
   console.log(req.body);
   try {
     const { name, course, picture, idNumber, dateOfBirth, expiryDate } = req.body;
-
     // Convert dateOfBirth string to a Date object
     const formattedDateOfBirth = new Date(dateOfBirth);
-
     await studentModel.create({
       name: name,
       course: course,
@@ -64,7 +74,6 @@ app.post('/api/students', async (req, res) => {
       dateOfBirth: formattedDateOfBirth,
       expiryDate: expiryDate,
     });
-
     res.send('Student Created');
   } catch (error) {
     console.error(error);
@@ -72,7 +81,7 @@ app.post('/api/students', async (req, res) => {
   }
 });
 
-// Express Get Route for Fetching a Specific Student by ID
+// Express Get Route for Fetching all Students
 app.get('/api/students', async (req, res) => {
   try {
     // Fetch all students
@@ -87,6 +96,19 @@ app.get('/api/students', async (req, res) => {
 // Default Route for HTTP GET Requests at Root Path ('/')
 app.get('/', (req, res) => {
   res.send('Student Registration');
+});
+
+// Express Delete Route for Deleting a Student by idNumber
+app.delete('/api/students/:idNumber', async (req, res) => {
+  try {
+    const { idNumber } = req.params;
+    // Delete the student by idNumber
+    await studentModel.deleteOne({ idNumber });
+    res.send('Student Deleted');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // Express Server Listening on a Port

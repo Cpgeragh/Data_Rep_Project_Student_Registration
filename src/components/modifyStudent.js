@@ -1,79 +1,133 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function ModifyStudent(props) {
-  let { id } = useParams();
-  const [name, setName] = useState('');
-  const [course, setCourse] = useState('');
-  const [picture, setPicture] = useState('');
-  const [idNumber, setIdNumber] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+export default function ModifyStudent() {
 
-  const navigate = useNavigate();
+  const [idNumber, setIdNumber] = useState('');
+  const [student, setStudent] = useState(null);
+
+  const [updatedStudent, setUpdatedStudent] = useState({
+
+    name: '',
+    course: '',
+    picture: '',
+    dateOfBirth: '',
+    expiryDate: '',
+
+  });
+
+  const handleSearch = () => {
+
+    axios.get(`/api/students/${idNumber}`)
+    
+      .then((response) => {
+
+        setStudent(response.data);
+        setUpdatedStudent(response.data);
+
+      }) .catch((error) => {
+
+        console.error(error);
+
+      });
+
+  };
+
+  const handleUpdate = () => {
+
+    axios.put(`/api/students/${idNumber}`, updatedStudent)
+
+      .then((response) => {
+
+        console.log(response.data);
+        // Update the student state with the updated information
+        setStudent(response.data);
+
+      }).catch((error) => {
+
+        console.error(error);
+
+      });
+
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/api/student/${id}`)
-      .then(response => {
-        const studentData = response.data;
-        setName(studentData.name);
-        setCourse(studentData.course);
-        setPicture(studentData.picture);
-        setIdNumber(studentData.idNumber);
-        setDateOfBirth(studentData.dateOfBirth);
-        setExpiryDate(studentData.expiryDate);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [id]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    if (student) {
 
-    const updatedStudent = {
-      id: id,
-      name: name,
-      course: course,
-      picture: picture,
-      idNumber: idNumber,
-      dateOfBirth: dateOfBirth,
-      expiryDate: expiryDate,
-    };
+      setUpdatedStudent(student);
 
-    axios.put(`http://localhost:4000/api/student/${id}`, updatedStudent)
-      .then((res) => {
-        console.log(res.data);
-        navigate('/student-list'); // Assuming there's a route for the student list
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle error, show a message, etc.
-      });
-  }
+    }
+
+  }, [student]);
 
   return (
-    <div>
-      <h2>Modify Student Information</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Modify the form fields according to the student information */}
-        {/* For example: */}
-        <div className="form-group">
-          <label>Name: </label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        {/* Repeat similar blocks for other fields like course, picture, idNumber, etc. */}
 
-        <div className="form-group">
-          <input type="submit" value="Modify Student" className="btn btn-primary" />
+    <div>
+      
+      <h2>Modify Student</h2>
+
+      <div>
+        <label>Enter ID Number:</label>
+        <input type="text" value={idNumber} onChange={(e) => setIdNumber(e.target.value)} />
+        <button onClick={handleSearch}>Search</button>
+      </div>
+
+      {student && (
+        <div>
+          <h3>Student Information</h3>
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              value={updatedStudent.name}
+              onChange={(e) => setUpdatedStudent({ ...updatedStudent, name: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label>Course:</label>
+            <input
+              type="text"
+              value={updatedStudent.course}
+              onChange={(e) => setUpdatedStudent({ ...updatedStudent, course: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label>Picture:</label>
+            <input
+              type="text"
+              value={updatedStudent.picture}
+              onChange={(e) => setUpdatedStudent({ ...updatedStudent, picture: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label>Date of Birth:</label>
+            <input
+              type="text"
+              value={updatedStudent.dateOfBirth}
+              onChange={(e) => setUpdatedStudent({ ...updatedStudent, dateOfBirth: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label>Expiry Date:</label>
+            <input
+              type="text"
+              value={updatedStudent.expiryDate}
+              onChange={(e) => setUpdatedStudent({ ...updatedStudent, expiryDate: e.target.value })}
+            />
+          </div>
+
+          <button onClick={handleUpdate}>Update</button>
         </div>
-      </form>
+
+      )}
+
     </div>
+
   );
+
 }
