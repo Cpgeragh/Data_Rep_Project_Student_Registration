@@ -7,11 +7,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Create from './components/studentRegistrationForm';
-import Read from './components/displayStudents';
-import Edit from './components/modifyStudent';
-import { Create as CreateStudent, Read as ReadStudents, Edit as EditStudent } from './components/student'; // Import student components
+import StudentRegistrationForm from './components/studentRegistrationForm';
 import DisplayStudents from './components/displayStudents';
+import ModifyStudent from './components/modifyStudent';
 
 function App() {
   return (
